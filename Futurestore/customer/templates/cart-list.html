@@ -1,0 +1,44 @@
+{%extends 'base.html'%}
+{%block body_block%}
+<div class="container-fluid">
+     {%if messages%}
+        {%for message in messages%}
+        {%if message.success == DEFAULT_MESSAGE_LEVELS.success%}
+          <div class="alert alert-warning alert-dismissible fade show" role="alert">
+            <strong>{{message}}</strong> 
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        {%endif%}
+        {%endfor%}
+        {%endif%}
+    <div class="row">
+        {%for cart in carts%}
+        <div class="col-2"></div>
+        <div class="col-4">
+            <div class="card h-100">
+                <!-- Product image-->
+                <img class="card-img-top" src="{{cart.product.image.url}}" alt="..." height="100px" width="100px" />
+                <!-- Product details-->
+                <div class="card-body p-4">
+                    <div class="text-center">
+                        <!-- Product name-->
+                        <h5 class="fw-bolder">{{cart.product.product_name}}</h5>
+                        <!-- Product price-->
+                        {{cart.product.price}}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-3">
+            quantity:{{cart.quantity}}
+            <br>
+            status:{{cart.status}}
+        </div>
+        <div class="col-3">
+            <a class="btn btn-outline-success" href="">Checkout</a>
+            <a class="btn btn-outline-danger" href="">Remove</a>
+        </div>
+        {%endfor%}
+    </div>
+</div>
+{%endblock%}
