@@ -27,3 +27,6 @@ class LoginForm(forms.Form):
 #CART FORM
 class CartForm(forms.Form):
     quantity=forms.IntegerField(widget=forms.NumberInput(attrs={"class":"form-control"}))
+#ORDER FORM
+class OrderForm(forms.Form):
+    delivery_address=forms.CharField(widget=forms.Textarea(attrs={"class":"form-control"}))

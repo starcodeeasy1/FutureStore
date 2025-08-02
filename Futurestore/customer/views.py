@@ -4,9 +4,8 @@ from customer import forms
 from django.contrib.auth.models import User
 from django.contrib import messages
 from django.urls import reverse_lazy
-from owner.models import Product,Category
+from owner.models import Product,Cart,Order
 from django.contrib.auth import authenticate,login
-from owner.models import Cart
 #REGISTRATION VIEW
 class RegistrationView(CreateView):
     model=User
@@ -81,6 +80,22 @@ class MyCartView(ListView):
     def get_queryset(self):
         return Cart.objects.filter(user=self.request.user).exclude(status="cancelled")
 #VIEW FOR UPDATING CART
+
+#VIEW FOR ORDERING A PRODUCT OR AN ITEM
+class PlaceOrderView(FormView):
+    template_name="place-order.html"
+    form_class=forms.OrderForm
+    def post(self, request, *args, **kwargs):
+        cart_id=kwargs.get("cid")
+        product_id=kwargs.get("pid")
+        cart=Cart.objects.get(id=cart_id)
+        product=Product.objects.get(id=product_id)
+        user=request.user
+        # form=forms.OrderForm(request.POST)
+        # if form.is_valid():
+        #    return Order.objects.create(**form.cleaned_data,product=product,user=user)
+        delivery_address=request.POST.get("delivery_address")
+        order=Order.objects.create(product=product,user=user,delivery_address=delivery_address)
 
 
     

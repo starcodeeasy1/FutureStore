@@ -35,7 +35,7 @@
             status:{{cart.status}}
         </div>
         <div class="col-3">
-            <a class="btn btn-outline-success" href="">Checkout</a>
+            <a class="btn btn-outline-success" href="{%url 'place-order' cart.id cart.product.id%}">Checkout</a>
             <a class="btn btn-outline-danger" href="">Remove</a>
         </div>
         {%endfor%}
