@@ -6,7 +6,7 @@ urlpatterns=[path("",views.LoginView.as_view(),name="login"),
              path("products/<int:id>",views.PoductDetailView.as_view(),name="product-detail"),
              path("products/<int:id>/carts/add",views.AddToCart.as_view(),name="add-to-cart"),
              path("carts/all",views.MyCartView.as_view(),name="mycart"),
-             path("carts/place-order/<int:cid>/<int:pid>",views.PlaceOrderView.as_view(),name="place-order")
-        
+             path("carts/place-order/<int:cid>/<int:pid>",views.PlaceOrderView.as_view(),name="place-order"),
+            #  path("carts/cancel/<int:cid>/<int:pid>",views.CartUpdateView.as_view(),name="cart-change")
              ]
             

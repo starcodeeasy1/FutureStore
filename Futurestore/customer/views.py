@@ -78,8 +78,7 @@ class MyCartView(ListView):
     template_name="cart-list.html"
     context_object_name="carts"
     def get_queryset(self):
-        return Cart.objects.filter(user=self.request.user).exclude(status="cancelled")
-#VIEW FOR UPDATING CART
+        return Cart.objects.filter(user=self.request.user).exclude(status="cancelled").order_by("-created_date")
 
 #VIEW FOR ORDERING A PRODUCT OR AN ITEM
 class PlaceOrderView(FormView):
@@ -95,7 +94,22 @@ class PlaceOrderView(FormView):
         # if form.is_valid():
         #    return Order.objects.create(**form.cleaned_data,product=product,user=user)
         delivery_address=request.POST.get("delivery_address")
-        order=Order.objects.create(product=product,user=user,delivery_address=delivery_address)
+        Order.objects.create(product=product,user=user,delivery_address=delivery_address)
+        cart.status="order-placed"
+        cart.save()
+        messages.success(request,"Order Placed")
+        return redirect("home")
+#VIEW FOR REMOVING A PRODUCT FROM CART)(UPDATING CART)
+# class CartUpdateView(UpdateView):
+#     template_name="cart-update.html"
+#     def post(self, request, *args, **kwargs):
+#         cart_id=kwargs.get("cid")
+#         cart=Cart.objects.get(id=cart_id)
+#         product_id=kwargs.get("pid")
+#         product=Product.Objects.get(id=product_id)
+#         cart.status="cancelled"
+#         cart.save()
+#         return redirect("home")
 
 
     
