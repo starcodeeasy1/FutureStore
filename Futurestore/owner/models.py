@@ -49,6 +49,7 @@ class Order(models.Model):
     )
     status=models.CharField(max_length=256,choices=options,default="order-placed")
     delivery_address=models.CharField(max_length=256,null=True)
+    expected_delivery_date=models.DateTimeField(null=True)
     def __str__(self):
         return self.product
 #Model For Review

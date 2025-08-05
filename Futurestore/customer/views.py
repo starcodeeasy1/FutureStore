@@ -10,7 +10,7 @@ from django.contrib.auth import authenticate,login
 class RegistrationView(CreateView):
     model=User
     form_class=forms.RegistrationForm
-    template_name="registration.html"
+    template_name="customer/registration.html"
     success_url=reverse_lazy("login")
     
     def form_valid(self, form):
@@ -19,7 +19,7 @@ class RegistrationView(CreateView):
 
 #LOGIN VIEW
 class LoginView(FormView):
-    template_name="login.html"
+    template_name="customer/login.html"
     form_class=forms.LoginForm
     # def get(self,request,*args,**kwargs):
     #     form=forms.LoginForm()
@@ -41,7 +41,7 @@ class LoginView(FormView):
             return render(request,"login.html",{"form":form})
 #INDEX VIEW(VIEW FOR HOME PAGE)
 class HomeView(TemplateView):
-    template_name="home.html"
+    template_name="customer/home.html"
     
     def get_context_data(self, **kwargs):
         context=super().get_context_data(**kwargs)
@@ -52,12 +52,12 @@ class HomeView(TemplateView):
 #VIEW FOR TAKING DETAILS OF A PRODUCT
 class PoductDetailView(DetailView):
     model=Product
-    template_name="product-detail.html"
+    template_name="customer/product-detail.html"
     context_object_data="product"
     pk_url_kwarg="id"
 #ADD TO CART VIEW
 class AddToCart(FormView):
-    template_name="add-to-cart.html"
+    template_name="customer/add-to-cart.html"
     form_class=forms.CartForm
     def get(self, request, *args, **kwargs):
         id=kwargs.get("id")
@@ -75,14 +75,14 @@ class AddToCart(FormView):
 #VIEW FOR LISTING ITEMS IN CART
 class MyCartView(ListView):
     model=Cart
-    template_name="cart-list.html"
+    template_name="customer/cart-list.html"
     context_object_name="carts"
     def get_queryset(self):
         return Cart.objects.filter(user=self.request.user).exclude(status="cancelled").order_by("-created_date")
 
 #VIEW FOR ORDERING A PRODUCT OR AN ITEM
 class PlaceOrderView(FormView):
-    template_name="place-order.html"
+    template_name="customer/place-order.html"
     form_class=forms.OrderForm
     def post(self, request, *args, **kwargs):
         cart_id=kwargs.get("cid")

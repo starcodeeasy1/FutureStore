@@ -1,0 +1,43 @@
+{%extends 'customer/base.html'%}
+{%block body_block%}
+<div class="container-fluid">
+    {%if messages%}
+    {%for message in messages%}
+    {%if message.success == DEFAULT_MESSAGE_LEVELS.success%}
+    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+        <strong>{{message}}</strong>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    {%endif%}
+    {%endfor%}
+    {%endif%}
+    <div class="row">
+        <div class="col-3"></div>
+        <div class="col-6">
+            <table class="table border">
+                <tr>
+                    <th>Product Name</th>
+                    <th>Category</th>
+                    <th>User</th>
+                    <th>Created Date</th>
+                    <th>Action</th>
+                </tr>
+                {%for order in orders%}
+                <tr>
+                    <td>{{order.product.product_name}}</td>
+                    <td>{{order.product.category}}</td>
+                    <td>{{order.user}}</td>
+                    <td>{{order.created_date}}</td>
+                    <td>
+                        <a class="btn  btn-outline-primary" href="{%url 'order-details' order.id%}">view</a>
+                        <a class="btn  btn-outline-warning" href="">Edit</a>
+                        <a class="btn  btn-outline-success" href="">confirm</a>
+                    </td>
+                    {%endfor%}
+                </tr>
+            </table>
+        </div>
+        <div class="col-3"></div>
+    </div>
+</div>
+{%endblock%}

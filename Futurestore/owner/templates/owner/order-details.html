@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q"
+        crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-3"></div>
+            <div class="col-6">
+                <div class="card" style="width: 18rem; margin-top: 50px;">
+                    <img style="object-fit: contain;" src="{{order.product.image.url}}" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">{{order.product.product_name}}</h5>
+                        <p class="card-text">{{order.product.description}}</p>
+                    </div>
+                    <ul class="list-group list-group-flush">              
+                        <li class="list-group-item">Address:{{order.delivery_address}}</li>
+                        <li class="list-group-item">Customer:{{order.user.first_name}}</li>
+                        <li class="list-group-item">{{order.user.email}}</li>
+                    </ul>
+                    <div class="card-body">
+                        <a href="#" class="card-link"></a>
+                        <a href="#" class="card-link"></a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-3">
+                <form action="" method="post" enctype="multipart/form-data">
+                    {%csrf_token%}
+                    {{form.as_p}}
+                    <button class="btn btn-outline-primary" type="submit">update</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
