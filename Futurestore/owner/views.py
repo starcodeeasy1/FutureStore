@@ -1,8 +1,9 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 from django.views.generic import TemplateView,ListView,DetailView
 from owner.models import Order
 from django.contrib import messages
 from owner.forms import OrderUpdateForm
+from django.core.mail import send_mail
 #ADMIN DASHBOARD VIEW
 class AdminDashBoardView(TemplateView):
     template_name="owner/dashboard.html"
@@ -28,6 +29,24 @@ class OrderDetailView(DetailView):
         context=super().get_context_data(**kwargs)
         context["form"]=OrderUpdateForm()
         return context
+    def post(self,request,*args,**kwargs):
+        order=self.get_object()
+        form=OrderUpdateForm(request.POST)
+        if form.is_valid():
+         order.status=form.cleaned_data.get("status")
+         order.expected_delivery_date=form.cleaned_data.get("expected_delivery_date")
+         date=form.cleaned_data.get("expected_delivery_date")
+         order.save()
+         send_mail("order delivery update future",
+                   f"your order will be delivered on,{date}",
+                   "ninababy0828@gmail.com",
+                   ["ninaammuz@gmail.com"],
+                   )
+         return redirect("dashboard")
+        
+
+
+    
 
 
     
